@@ -11,7 +11,6 @@ class Hotel(models.Model):
     description = models.TextField()
 
 
-
 class Room(models.Model):
     hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     type = models.CharField(max_length=50)
