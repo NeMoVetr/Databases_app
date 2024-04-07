@@ -9,6 +9,7 @@ class Hotel(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=1)
     contact_information = models.CharField(max_length=255)
     description = models.TextField()
+    services = models.ManyToManyField('Service', related_name='hotels')
 
 
 class Room(models.Model):
@@ -65,7 +66,6 @@ class Cancellation(models.Model):
 
 
 class Service(models.Model):
-    hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
@@ -76,3 +76,4 @@ class Payment(models.Model):
     booking_id = models.ForeignKey(Booking, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=8, decimal_places=1)
     date_and_time = models.DateTimeField(auto_now_add=True)
+

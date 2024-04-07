@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Средняя стоимость номера</title>
+</head>
+<body>
+     <h1>Средняя стоимость номера</h1>
+     <form method="POST">
+        {% csrf_token %}
+        <label for="hotel_name">Название отеля:</label>
+        <input type="text" id="hotel_name" name="hotel_name" required>
+         <br>
+        <label for="room_type">Тип номера:</label>
+        <select id="room_type" name="room_type" required>
+            <option value="Стандартный">Стандартный</option>
+            <option value="Двухместный">Двухместный</option>
+            <option value="Люкс">Люкс</option>
+            <option value="Апартаменты">Апартаменты</option>
+            <option value="Семейный">Семейный</option>
+            <option value="Двухэтажный">Двухэтажный</option>
+        </select>
+         <br>
+        <button type="submit">Проанализировать</button>
+    </form>
+    <h1>Результат</h1>
+    {{ html_table | safe }}
+
+</body>
+</html>

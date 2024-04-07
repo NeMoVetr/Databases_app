@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Подтверждение удаления отмены брони</title>
+</head>
+<body>
+   <h1>Вы уверены, что хотите удалить эту отмену?</h1>
+    <p><strong>Отмена брони: </strong>{{ cancellation }}</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+</body>
+</html>

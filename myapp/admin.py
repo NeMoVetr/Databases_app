@@ -116,3 +116,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Cancellation, CancellationAdmin)
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(Service, ServiceAdmin)
+

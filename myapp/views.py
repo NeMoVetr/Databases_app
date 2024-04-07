@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pandas as pd
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import HotelForm, RoomForm, HotelEmployeeForm, BookingForm, \
     ClientForm, ReviewForm, PaymentForm, ServiceForm, EventForm, CancellationForm
@@ -10,6 +10,9 @@ from .models import Hotel, Room, HotelEmployee, Booking, \
 
 
 # Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
 
 def hotel_show(request):
     hotel_set = Hotel.objects.all()
@@ -134,17 +137,17 @@ def service_show(request):
     service_set = Service.objects.all()
 
     data = {
-        'Название отеля': [service.hotel_id.name for service in service_set],
+        'Название отеля': [", ".join(service.hotels.values_list('name', flat=True)) for service in service_set],
         'Название': [service.name for service in service_set],
         'Описание': [service.description for service in service_set],
         'Цена': [service.price for service in service_set],
         'Доступность': [service.availability for service in service_set],
-
     }
 
     html_table = pd.DataFrame(data).to_html()
     context = {'html_table': html_table}
     return render(request, 'all_service.html', context)
+
 
 
 def event_show(request):
@@ -395,6 +398,255 @@ def payment_add(request):
     return render(request, 'payment_add.html', {'form': form, 'message': message})
 
 
+def hotel_update(request, id):
+    """Изменить отель"""
+
+    hotel = get_object_or_404(Hotel, id=id)
+
+    if request.method == 'POST':
+        form = HotelForm(request.POST, instance=hotel)
+        if form.is_valid():
+            form.save()
+            return redirect('hotel_show')
+    else:
+        form = HotelForm(instance=hotel)
+
+    return render(request, 'hotel_form.html', {'form': form})
+
+
+def room_update(request, id):
+    """Изменить отель"""
+
+    room = get_object_or_404(Room, id=id)
+
+    if request.method == 'POST':
+        form = RoomForm(request.POST, instance=room)
+        if form.is_valid():
+            form.save()
+            return redirect('rooms_show')
+    else:
+        form = RoomForm(instance=room)
+
+    return render(request, 'room_add.html', {'form': form})
+
+
+def client_update(request, id):
+    """Изменить клиента"""
+
+    client = get_object_or_404(Client, id=id)
+
+    if request.method == 'POST':
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            form.save()
+            return redirect('clients_show')
+    else:
+        form = ClientForm(instance=client)
+
+    return render(request, 'client_add.html', {'form': form})
+
+
+def booking_update(request, id):
+    """Изменить бронь"""
+
+    booking = get_object_or_404(Booking, id=id)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('bookings_show')
+    else:
+        form = BookingForm(instance=booking)
+
+    return render(request, 'booking_add.html', {'form': form})
+
+
+def hotel_employee_update(request, id):
+    """Изменить сотрудника"""
+
+    hotel_employee = get_object_or_404(HotelEmployee, id=id)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=hotel_employee)
+        if form.is_valid():
+            form.save()
+            return redirect('hotel_employee_show')
+    else:
+        form = HotelEmployeeForm(instance=hotel_employee)
+
+    return render(request, 'hotel_employee_add.html', {'form': form})
+
+
+def review_update(request, id):
+    """Изменить отзыв"""
+
+    review = get_object_or_404(Review, id=id)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('review_show')
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, 'review_add.html', {'form': form})
+
+
+def event_update(request, id):
+    """Изменить мероприятие"""
+
+    event = get_object_or_404(HotelEmployee, id=id)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('event_show')
+    else:
+        form = EventForm(instance=event)
+
+    return render(request, 'event_add.html', {'form': form})
+
+
+def cancellation_update(request, id):
+    """Изменить отмену брони"""
+
+    cancellation = get_object_or_404(Cancellation, id=id)
+
+    if request.method == 'POST':
+        form = CancellationForm(request.POST, instance=cancellation)
+        if form.is_valid():
+            form.save()
+            return redirect('cancellation_show')
+    else:
+        form = CancellationForm(instance=cancellation)
+
+    return render(request, 'cancellation_add.html', {'form': form})
+
+
+def service_update(request, id):
+    """Изменить услугу"""
+    service = get_object_or_404(Service, id=id)
+
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            return redirect('cancellation_show')
+    else:
+        form = ServiceForm(instance=service)
+
+    return render(request, 'cancellation_add.html', {'form': form})
+
+
+def payment_update(request, id):
+    """Изменить платёж"""
+    payment = get_object_or_404(Cancellation, id=id)
+
+    if request.method == 'POST':
+        form = CancellationForm(request.POST, instance=payment)
+        if form.is_valid():
+            form.save()
+            return redirect('payment_show')
+    else:
+        form = CancellationForm(instance=payment)
+
+    return render(request, 'payment_add.html', {'form': form})
+
+
+def hotel_delete(request, id):
+    """Удаление отеля"""
+    hotel = get_object_or_404(Hotel, id=id)
+    if request.method == 'POST':
+        hotel.delete()
+        return redirect('hotel_show')
+
+    return render(request, 'hotel_confirm_delete.html', {'hotel': hotel})
+
+
+def room_delete(request, id):
+    """Удаления номера"""
+    room = get_object_or_404(Room, id=id)
+    if request.method == 'POST':
+        room.delete()
+        return redirect('room_show')
+    return render(request, 'room_confirm_delete.html', {'room': room})
+
+
+def client_delete(request, id):
+    """Удаления клиента"""
+    client = get_object_or_404(Client, id=id)
+    if request.method == 'POST':
+        client.delete()
+        return redirect('client_show')
+    return render(request, 'client_confirm_delete.html', {'client': client})
+
+
+def booking_delete(request, id):
+    """Удаления бронирования"""
+    booking = get_object_or_404(Booking, id=id)
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('booking_show')
+    return render(request, 'booking_confirm_delete.html', {'booking': booking})
+
+
+def hotel_employee_delete(request, id):
+    """Удаления сотрудника отеля"""
+    employee = get_object_or_404(HotelEmployee, id=id)
+    if request.method == 'POST':
+        employee.delete()
+        return redirect('hotel_employee_show')
+    return render(request, 'hotel_employee_confirm_delete.html', {'employee': employee})
+
+
+def review_delete(request, id):
+    """Удаления отзыва"""
+    review = get_object_or_404(Review, id=id)
+    if request.method == 'POST':
+        review.delete()
+        return redirect('review_show')
+    return render(request, 'review_confirm_delete.html', {'review': review})
+
+
+def payment_delete(request, id):
+    """Удаления платежа"""
+    payment = get_object_or_404(Payment, id=id)
+    if request.method == 'POST':
+        payment.delete()
+        return redirect('payment_show')
+    return render(request, 'payment_confirm_delete.html', {'payment': payment})
+
+
+def event_delete(request, id):
+    """Удаления мероприятия"""
+    event = get_object_or_404(Event, id=id)
+    if request.method == 'POST':
+        event.delete()
+        return redirect('event_show')
+    return render(request, 'event_confirm_delete.html', {'event': event})
+
+
+def cancellation_delete(request, id):
+    """Удаления отмены бронирования"""
+    cancellation = get_object_or_404(Cancellation, id=id)
+    if request.method == 'POST':
+        cancellation.delete()
+        return redirect('cancellation_show')
+    return render(request, 'cancellation_confirm_delete.html', {'cancellation': cancellation})
+
+
+def service_delete(request, id):
+    """Удаления услуги"""
+    service = get_object_or_404(Service, id=id)
+    if request.method == 'POST':
+        service.delete()
+        return redirect('service_show')
+    return render(request, 'service_confirm_delete.html', {'service': service})
+
+
 def available_rooms(request):
     """Доступные номера на заданные даты"""
     hotel_id = request.GET.get('hotel_id')
@@ -455,3 +707,32 @@ def rooms_in_price_range(request):
 
         return render(request, 'rooms_in_price_range.html', context)
     return render(request, 'rooms_in_price_range.html', {})
+
+
+def average_room_price(request):
+    """Средняя цена номера для типа номера выбранного отеля"""
+
+    hotel_name = request.POST.get('hotel_name')
+    room_type = request.POST.get('room_type')
+
+    if hotel_name and room_type:
+        rooms = Room.objects.filter(hotel_id__name=hotel_name, type=room_type)
+
+        total_price = sum(room.price for room in rooms)
+        average_price = total_price / len(rooms) if len(rooms) > 0 else 0
+
+        data = {
+            'Название отеля': hotel_name,
+            'Тип номера': room_type,
+            'Средняя стоимость': average_price,
+        }
+
+        df = pd.DataFrame(data)
+
+        html_table = df.to_html()
+
+        context = {'html_table': html_table}
+
+        return render(request, 'average_room_price.html', context)
+
+    return render(request, 'average_room_price.html', {})

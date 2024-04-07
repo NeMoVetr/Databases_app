@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Главная страница</title>
+</head>
+<body>
+     <h1>Добро пожаловать на главную страницу для работы с базой данных бронирование отелей!</h1>
+    <ul>
+        <li><a href="{% url 'bookings_show' %}">Показать все брони</a></li>
+        <li><a href="{% url 'cancellation_show' %}">Показать все отмены бронирований</a></li>
+        <li><a href="{% url 'clients_show' %}">Показать всех клиентов</a></li>
+        <li><a href="{% url 'event_show' %}">Показать все мероприятия</a></li>
+        <li><a href="{% url 'hotel_show' %}">Показать все отели</a></li>
+        <li><a href="{% url 'hotel_employee_show' %}">Показать всех сотрудников отелей</a></li>
+        <li><a href="{% url 'payment_show' %}">Показать все платежи</a></li>
+        <li><a href="{% url 'review_show' %}">Показать все отзывы</a></li>
+        <li><a href="{% url 'rooms_show' %}">Показать все номера</a></li>
+        <li><a href="{% url 'service_show' %}">Показать все услуги</a></li>
+
+        <li><a href="{% url 'booking_add' %}">Добавить бронь</a></li>
+        <li><a href="{% url 'cancellation_add' %}">Добавить отмену бронирования</a></li>
+        <li><a href="{% url 'client_add' %}">Добавить клиента</a></li>
+        <li><a href="{% url 'event_add' %}">Добавить мероприятие</a></li>
+        <li><a href="{% url 'hotel_add' %}">Добавить отель</a></li>
+        <li><a href="{% url 'hotel_employee_add' %}">Добавить сотрудника отеля</a></li>
+        <li><a href="{% url 'payment_add' %}">Добавить платеж</a></li>
+        <li><a href="{% url 'review_add' %}">Добавить отзыв</a></li>
+        <li><a href="{% url 'room_add' %}">Добавить номер</a></li>
+        <li><a href="{% url 'service_add' %}">Добавить услугу</a></li>
+
+        <li><a href="{% url 'booking_delete' %}">Удалить бронь</a></li>
+        <li><a href="{% url 'cancellation_delete' %}">Удалить отмену бронирования</a></li>
+        <li><a href="{% url 'client_delete' %}">Удалить клиента</a></li>
+        <li><a href="{% url 'event_delete' %}">Удалить мероприятие</a></li>
+        <li><a href="{% url 'hotel_delete' %}">Удалить отель</a></li>
+        <li><a href="{% url 'hotel_employee_delete' %}">Удалить сотрудника отеля</a></li>
+        <li><a href="{% url 'payment_delete' %}">Удалить платеж</a></li>
+        <li><a href="{% url 'review_delete' %}">Удалить отзыв</a></li>
+        <li><a href="{% url 'room_delete' %}">Удалить номер</a></li>
+        <li><a href="{% url 'service_delete' %}">Удалить услугу</a></li>
+
+
+        <li><a href="{% url 'available_rooms' %}">Свободные номера на определённые даты для выбранного отеля</a></li>
+        <li><a href="{% url 'rooms_in_price_range' %}">Номера в заданном ценовом диапазоне</a></li>
+        <li><a href="{% url 'available_rooms' %}">Средняя цена номера для типа номера</a></li>
+    </ul>
+</body>
+</html>

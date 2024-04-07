@@ -15,11 +15,6 @@ class RoomForm(forms.ModelForm):
         model = Room
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(RoomForm, self).__init__(*args, **kwargs)
-
-        self.fields['hotel_id'].queryset = self.fields['hotel_id'].queryset.values_list('id', flat=True)
-
 
 class ClientForm(forms.ModelForm):
     class Meta:
@@ -32,22 +27,11 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(BookingForm, self).__init__(*args, **kwargs)
-
-        self.fields['client_id'].queryset = self.fields['client_id'].queryset.values_list('id', flat=True)
-        self.fields['room_id'].queryset = self.fields['room_id'].queryset.values_list('id', flat=True)
-
 
 class HotelEmployeeForm(forms.ModelForm):
     class Meta:
         model = HotelEmployee
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(HotelEmployeeForm, self).__init__(*args, **kwargs)
-
-        self.fields['hotel_id'].queryset = self.fields['hotel_id'].queryset.values_list('id', flat=True)
 
 
 class ReviewForm(forms.ModelForm):
@@ -55,22 +39,11 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(ReviewForm, self).__init__(*args, **kwargs)
-
-        self.fields['hotel_id'].queryset = self.fields['hotel_id'].queryset.values_list('id', flat=True)
-        self.fields['client_id'].queryset = self.fields['client_id'].queryset.values_list('id', flat=True)
-
 
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(PaymentForm, self).__init__(*args, **kwargs)
-
-        self.fields['booking_id'].queryset = self.fields['booking_id'].queryset.values_list('id', flat=True)
 
 
 class EventForm(forms.ModelForm):
@@ -78,21 +51,11 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(EventForm, self).__init__(*args, **kwargs)
-
-        self.fields['hotel_id'].queryset = self.fields['hotel_id'].queryset.values_list('id', flat=True)
-
 
 class CancellationForm(forms.ModelForm):
     class Meta:
         model = Cancellation
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(CancellationForm, self).__init__(*args, **kwargs)
-
-        self.fields['booking_id'].queryset = self.fields['booking_id'].queryset.values_list('id', flat=True)
 
 
 class ServiceForm(forms.ModelForm):
@@ -100,7 +63,4 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(ServiceForm, self).__init__(*args, **kwargs)
 
-        self.fields['hotel_id'].queryset = self.fields['hotel_id'].queryset.values_list('id', flat=True)
